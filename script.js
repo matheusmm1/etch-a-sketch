@@ -12,9 +12,9 @@ function newGrid () {
         const row = container.appendChild(document.createElement('div'));
         for (i = 0; i < squaresPerSide; i++) {
             let squares = container.appendChild(document.createElement('div'));
-            squares.setAttribute('style', 'background-color: black; width: 7px; height: 7px; margin: 1px');
+            squares.setAttribute('style', 'background-color: grey; width: 7px; height: 7px; margin: 1px');
             squares.addEventListener("mouseover", function() {
-                squares.style.backgroundColor = "red"
+                squares.style.backgroundColor = 'black'
             })
             row.appendChild(squares);
         }
@@ -38,5 +38,42 @@ function wipeAndResize() {
     
 }
 resizeButton.addEventListener('click', wipeAndResize)
+
+function randomColor() {
+    let letters = '0123456789ABCDEF';
+    let color = '#';
+    for ( i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  
+}
+
+let randomColorsButton = document.getElementById('randomColor');
+document.getElementById('buttons').setAttribute('style', 'display: flex; flex-direction: column; gap: 10px')
+randomColorsButton.addEventListener('click', function () {
+    while (container.hasChildNodes()) {
+        container.removeChild(container.firstChild);
+    }
+    squaresPerSide = prompt('Choose a number up to 100 to make a grid with that many squares on each side.')
+    for(j = 0; j < squaresPerSide; j++) {
+        if(squaresPerSide > 100) {
+            squaresPerSide = prompt('Values cannot exceed 100, sorry! Try another number.');
+            if (squaresPerSide == null || squaresPerSide == '') {
+                squaresPerSide = 30;
+                newGrid()
+            } else {newGrid()}
+        }
+        const row = container.appendChild(document.createElement('div'));
+        for (i = 0; i < squaresPerSide; i++) {
+            let squares = container.appendChild(document.createElement('div'));
+            squares.setAttribute('style', 'background-color: grey; width: 7px; height: 7px; margin: 1px');
+            squares.addEventListener("mouseover", function() {
+                squares.style.backgroundColor = randomColor()
+            })
+            row.appendChild(squares);
+        }
+    }
+})
 
 
